@@ -30,9 +30,9 @@ buckets = runParser (perms p <* eof) () ""
 -- http://themonadreader.wordpress.com/2011/01/09/issue-17/
 -- A crucial difference is that in our case the individual parsers can have
 -- different types.
-exampleInterleaveT :: String -> Either ParseError ([String], [String], String)
+exampleInterleaveT :: String -> Either ParseError (String, String, Char)
 exampleInterleaveT = runParser (perms p <* eof) () ""
   where
-    p = (,,) <$> many     *. string "a"
-             <*> atMost 6 *. string "b"
-             <*> one      *. string "c"
+    p = (,,) <$> many     *. char 'a'
+             <*> atMost 6 *. char 'b'
+             <*> one      *. char 'c'
