@@ -1,5 +1,5 @@
 Name:                PermuteEffects
-Version:             0.1.1
+Version:             0.2
 Synopsis:            Permutations of effectful computations
 -- Description:         
 Category:            Control
