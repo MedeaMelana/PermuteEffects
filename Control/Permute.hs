@@ -22,19 +22,19 @@ data Effects f a where
 
 -- | Map over the final result type.
 instance Functor (Effects f) where
-  fmap f (Nil x) = Nil (f x)
+  fmap f (Nil x)       = Nil (f x)
   fmap f (Cons a r ps) = Cons a r (fmap (fmap f) ps)
 
 -- | 'pure' represents the empty list of computations while '<*>' acts like
 -- '++'.
 instance Applicative (Effects f) where
-  pure = Nil
-  Nil g <*> y = fmap g y
+  pure             = Nil
+  Nil g <*> y      = fmap g y
   Cons a r x <*> y = Cons a r (flip <$> x <*> y)
 
 -- | Compute the length of a list of computations.
 length :: Effects f a -> Int
-length (Nil _)     = 0
+length (Nil _)       = 0
 length (Cons _ _ xs) = 1 + length xs
 
 -- | Allow a computation to be occur so many times in each permutation.
@@ -46,7 +46,7 @@ freq *. act = Cons act freq (Nil id)
 effectsMatchEpsilon :: Effects f a -> Maybe a
 effectsMatchEpsilon eff =
   case eff of
-    Nil x                -> Just x
+    Nil x                    -> Just x
     Cons  _ (R.Cons mz _) ps -> mz <**> effectsMatchEpsilon ps
 
 -- | Build a tree (using '<|>' for branching) of all permutations of the
