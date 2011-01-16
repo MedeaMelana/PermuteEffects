@@ -1,7 +1,7 @@
 module ParsecEx where
 
 import Control.Replicate
-import Control.Applicative.Permute
+import Control.Permute
 
 import Prelude hiding (id, (.))
 import Control.Category

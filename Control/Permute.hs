@@ -1,7 +1,7 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Control.Applicative.Permute ( Effects, perms, (*.) ) where
+module Control.Permute ( Effects, perms, (*.) ) where
 
 import Prelude hiding (length, sequence)
 import Control.Applicative hiding (some, many)
@@ -19,10 +19,6 @@ import qualified Control.Replicate as R
 data Effects f a where
   Nil  :: a -> Effects f a
   Cons :: f x -> Replicate x y -> Effects f (y -> z) -> Effects f z
-
-runEffects :: Alternative f => Effects f a -> f a
-runEffects (Nil x) = pure x
-runEffects (Cons act freq fs) = run freq act <**> runEffects fs
 
 -- | Map over the final result type.
 instance Functor (Effects f) where
