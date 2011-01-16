@@ -74,10 +74,10 @@ perms ps      = eps . asum . map split . firsts $ ps
         Just x   -> (<|> pure x)
         Nothing  -> id
 
--- | Give each effect a chance to be the first effect in the chain, producing
--- @n@ new chains where @n@ is the 'length' of the input chain. In each case
--- the relative order of the effects is preserved with exception of the effect
--- that was moved to the front.
+-- | Through repeated 'swap'ping, give each effect a chance to be the first
+-- effect in the chain, producing @n@ new chains where @n@ is the 'length' of
+-- the input chain. In each case the relative order of the effects is
+-- preserved with exception of the effect that was moved to the front.
 firsts :: Effects f a -> [Effects f a]
 firsts (Nil _) = []
 firsts (Cons a r ps) =
